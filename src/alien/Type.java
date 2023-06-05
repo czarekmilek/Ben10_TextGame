@@ -37,7 +37,7 @@ public enum Type {
             new String[]{"Fire", "Ice", "Water"},
             new String[]{}
     ),
-    MAGIC(
+    SOUND(
             new String[]{"Fighting"},
             new String[]{"Fire", "Poison"},
             new String[]{}
@@ -65,6 +65,11 @@ public enum Type {
     WATER(
             new String[]{"Fire", "Rock"},
             new String[]{"Grass", "Water"},
+            new String[]{}
+    ),
+    INTELLECT(
+            new String[]{"Psychic", "Normal"},
+            new String[]{"Fire", "Water", "Grass", "Fighting"},
             new String[]{}
     );
 

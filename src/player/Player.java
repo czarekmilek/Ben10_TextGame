@@ -1,89 +1,63 @@
 package player;
 
-import java.util.Arrays;
-
 import alien.Alien;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Player {
-    private boolean inBattle;
-    private int money;
-    private final String NAME;
-    private Backpack backpack;
-    private Alien[] party;
+    private String name;
+    private List<Alien> party;
+    private List<Alien> scannedAliens;
+    private Alien currentAlien;
 
-    public Player(final String name) {
-        this.inBattle = false;
-        this.money = 0;
-        this.NAME = name;
-        this.backpack = new Backpack();
-        this.party = new Alien[10];
+    public Player(String name) {
+        this.name = name;
+        this.party = new ArrayList<>();
+        this.scannedAliens = new ArrayList<>();
     }
 
-    public boolean isInBattle() {
-        return inBattle;
+    public void addToParty(Alien alien) {
+        if (!party.contains(alien)) {
+            party.add(alien);
+        } else {
+            System.out.println(alien.getName() + " is already in Omnitrix.");
+        }
     }
 
-    public int getMoney() {
-        return this.money;
+
+    public Alien[] getParty() {
+        return party.toArray(new Alien[0]);
     }
 
-    public String getName() {
-        return NAME;
-    }
-
-    public Backpack getBackpack() {
-        return this.backpack;
-    }
-
-    public Alien[] getParty(){
-        byte count = (byte)party.length;
-        for(Alien p : party) {
-            if(p == null){
-                count--;
+    public Alien getAlienByName(String name) {
+        for (Alien alien : party) {
+            if (alien.getName().equalsIgnoreCase(name)) {
+                return alien;
             }
         }
-        return Arrays.copyOfRange(party, 0, count);
+        return null;
     }
 
-    public void setBattleState(final boolean inBattle) {
-        this.inBattle = inBattle;
+    public Alien getAlienBySlot(int slot) {
+        return party.get(slot);
     }
 
-    public boolean isPartyEmpty() {
-        return getParty().length == 0;
+    public Alien getCurrentAlien() {
+        return currentAlien;
     }
 
-    /**
-     * Próbuje dodać <code>Alien</code> do party.
-     * @param alien <code>Alien</code> do dodania.
-     * @return <code>true</code> jeśli kosmita został dodany, <code>false</code> wpp.
-     */
-    public boolean addToParty(final Alien alien) {
-        for(int i = 0; i < party.length; i++) {
-            if(party[i] == null) {
-                party[i] = alien;
-                return true;
-            }
+    public void setCurrentAlien(Alien alien) {
+        currentAlien = alien;
+    }
+
+    public void scanAlien(Alien alien) {
+        if (!scannedAliens.contains(alien)) {
+            scannedAliens.add(alien);
+            System.out.println(alien.getName() + " has been successfully scanned and added to your Omnitrix!");
         }
-        return false;
-    }
-
-    public boolean swapSlots(final int one, final int two) {
-        if((one < 0 || one > 5) || (two < 0 || two > 5)) {
-            return false;
+        else {
+            System.out.println(alien.getName() + " has already been scanned.");
         }
-        final Alien temp = getParty()[one];
-        this.party[one] = this.party[two];
-        this.party[two] = temp;
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "Name: " + getName() +
-                "\nMoney: " + getMoney() +
-                "\nBackpack contents " + getBackpack().getMap() +
-                "\nParty contents " + Arrays.toString(getParty());
     }
 }
-

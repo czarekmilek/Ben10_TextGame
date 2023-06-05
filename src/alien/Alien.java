@@ -135,7 +135,7 @@ public class Alien
     }
 
     /**
-     * Imię Pokemona.
+     * Imię kosmity.
      * @return species.getName().
      */
     public String getName()
@@ -153,8 +153,8 @@ public class Alien
     }
 
     /**
-     * Metoda ustawiająca poziom Pokemona
-     * @param level poziom Pokemona
+     * Metoda ustawiająca poziom kosmity
+     * @param level poziom kosmity
      */
     public void setLevel(int level)
     {
@@ -194,7 +194,7 @@ public class Alien
     }
 
     /**
-     * Statystyki walki Pokemona.
+     * Statystyki walki kosmity.
      * @param stat statystyka walki.
      * @return statystyka walki.
      * @throws ArrayIndexOutOfBoundsException
@@ -205,7 +205,7 @@ public class Alien
     }
 
     /**
-     * Obecne statystyki Pokemona.
+     * Obecne statystyki kosmity.
      * @param stat obecna statystyka do wzięcia.
      * @return obecna statystyka do wzięcia.
      * @throws ArrayIndexOutOfBoundsException

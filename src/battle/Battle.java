@@ -14,11 +14,11 @@ public class Battle {
      * @param p <code>Gracz</code> biorący udział w <code>Walce</code>.
      * @param opponent <code>Alien</code> walczący przeciw <code>Graczowi</code>.
      */
-    public Battle(Player p, Alien opponent) {
+    public Battle(Player p, Alien opponent, byte alienSlot) {
         this.player1 = p;
         this.opponent = opponent;
         this.running = true;
-        alienSlot = 0;
+        this.alienSlot = alienSlot;
         player = p.getParty()[alienSlot];
     }
 
@@ -37,11 +37,21 @@ public class Battle {
         return false;
     }
 
+    public byte getAlienSlot() {
+        return alienSlot;
+    }
+
+    public void setAlienSlot(byte alienSlot) {
+        this.alienSlot = alienSlot;
+        player = player1.getParty()[alienSlot];
+    }
+
     public static boolean applyStatus(final Move m, final Alien p) {
         final Status s = m.getStatusEffect();
         for(int i = 0; i < p.getStatus().length; i++) {
             if(s.ordinal() == i) {
                 p.getStatus()[i] = true;
+                System.out.println("\nBen succesfully applied " + m.getStatusEffect() + " on other alien!");
                 return true;
             }
         }
@@ -58,7 +68,7 @@ public class Battle {
         if(!containsMove(player.getMoveSet(), m)) {
             return player.getName() + " does not know how to use " + m.getName() + ".";
         }
-        //TODO Make the randomization prioritize Supereffective moves
+        m.downPP();
         Move opponentMove = opponent.getMoveSet()[(byte)(Math.random() * opponent.getMoveSet().length)];
 
         if(player.getInBattleStat(Stats.SPEED) >= opponent.getInBattleStat(Stats.SPEED)) {
@@ -117,7 +127,7 @@ public class Battle {
             } else if(f < 1) {
                 str += "\nIt's not very effective...";
             } else if(f > 1) {
-                str += "\nIt's Super Effective!";
+                str += "\nIt's super effective!";
             }
         } else {
             str += "\nbut it missed...";
@@ -155,7 +165,10 @@ public class Battle {
                 defense = defending.getInBattleStat(Stats.SP_DEFENSE);
                 break;
             case STATUS:
-                return 0;
+                applyStatus(used, defending);
+                attack = attacking.getInBattleStat(Stats.SP_ATTACK);
+                defense = defending.getInBattleStat(Stats.SP_DEFENSE);
+                break;
             default:
                 throw new IllegalStateException("The MoveType " + used.getMoveType() + " is illegal!");
         }
