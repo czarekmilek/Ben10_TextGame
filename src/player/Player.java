@@ -10,15 +10,21 @@ public class Player {
     private List<Alien> party;
     private List<Alien> scannedAliens;
     private Alien currentAlien;
+    private Backpack backpack;
 
     public Player(String name) {
         this.name = name;
         this.party = new ArrayList<>();
         this.scannedAliens = new ArrayList<>();
+        this.backpack = new Backpack();
     }
 
     public void addToParty(Alien alien) {
-        if (!party.contains(alien)) {
+        Alien existingAlien = getAlienByName(alien.getName());
+        if (existingAlien != null) {
+            System.out.println("so it is already in your Omnitrix.");
+        }
+        else if (!party.contains(alien)) {
             party.add(alien);
         } else {
             System.out.println(alien.getName() + " is already in Omnitrix.");
@@ -52,12 +58,22 @@ public class Player {
     }
 
     public void scanAlien(Alien alien) {
-        if (!scannedAliens.contains(alien)) {
+        Alien existingAlien = getAlienByName(alien.getName());
+        if (existingAlien != null) {
+            System.out.println(alien.getName() + " has already been scanned before,");
+        } else if (!scannedAliens.contains(alien)) {
             scannedAliens.add(alien);
             System.out.println(alien.getName() + " has been successfully scanned and added to your Omnitrix!");
-        }
-        else {
+        } else {
             System.out.println(alien.getName() + " has already been scanned.");
         }
+    }
+
+
+    public void addItemToBackpack(Item item) {
+        backpack.addItem(item);
+    }
+    public Backpack getBackpack() {
+            return backpack;
     }
 }

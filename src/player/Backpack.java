@@ -2,18 +2,31 @@ package player;
 
 import alien.Alien;
 
-import java.util.HashMap;
 import java.util.Map;
-
+import java.util.ArrayList;
+import java.util.List;
+import java.util.HashMap;
 public class Backpack {
-    private Map items;
+    private List<Item> items;
 
     public Backpack() {
-        //TODO - add item class, change first key to Item
-        items = new HashMap<Integer, Integer>();
+        items = new ArrayList<>();
     }
 
-    public Map getMap() {
-        return this.items;
+    public List<Item> getItems() {
+        return items;
     }
+
+    public void addItem(Item item) {
+        items.add(item);
+    }
+
+    public Map<Integer, player.Item> getMap() {
+        Map<Integer, player.Item> map = new HashMap<>();
+        for (int i = 0; i < items.size(); i++) {
+            map.put(i, items.get(i));
+        }
+        return map;
+    }
+
 }

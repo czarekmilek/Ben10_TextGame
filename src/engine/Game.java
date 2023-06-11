@@ -3,6 +3,7 @@ package engine;
 import alien.*;
 import player.*;
 import battle.*;
+import world.*;
 
 import java.util.Arrays;
 import java.util.Scanner;
@@ -16,34 +17,36 @@ public class Game {
                 "Wildmutt", "Diamondhead", "XLR8", "Ghostfreak", "Ripjaws"};
 
         final String[] regions = new String[] {"New York", "Ohio", "Washington", "Texas", "Carolina", "Florida", "California"},
-                options = new String[] {"Battle", "Omnitrix", "Heal", "Explore", "Quit"};
+                options = new String[] {"Battle", "Omnitrix", "Heal", "Explore", "Tutorial", "Quit"};
 
         System.out.println(
-                        "\nSummer holidays just started. Ben Tennyson just started a roadtrip with his grandpa and cousing." +
-                        "\nBen: Why do I have to go on a roadtrip around USA with grandpa and my annoying cousin Gwen?" +
+                        "\n(Summer holidays just started. Ben Tennyson just started a road trip with his grandpa and cousin)" +
+                        "\nBen: Why do I have to go on a road trip around USA with grandpa and my annoying cousin Gwen?" +
                         "\nBen: Whole holidays with that nerd and no internet or video games... Could it get any worse?" +
-                        "\nToday they're camping in the woods. Grandpa Max seems to be starting a fire already, there's not much to do around here now." +
+                        "\n(Today they're camping in the woods. Grandpa Max seems to be starting a fire already, there's not much to do around here now)" +
                         "\nBen: Maybe I'll go on a little walk in the forest." +
-                        "\n\n*Ben walks a bit through the forest for some time*" +
+                        "\n\n(Ben walks a bit through the forest for some time)" +
                         "\n\nBen: I guess grandpa and Gwen might start worrying if I don't come back soon. Better head ba-" +
-                        "\n*suddenly something falls from the sky right in front of Ben*" +
+                        "\n(suddenly something falls from the sky right in front of Ben)" +
                         "\nBen: What was that?" +
-                        "\n*he moves closer to the strange object in the crater, it seems to be a metal sphere*" +
-                        "\nBen: Is it some alien stuff? I'll go get grandp-" +
-                        "\n*as he says that the sphere opens and a strange watch jumps on his wrist, it holds tigthly onto his wrist*" +
+                        "\n(he moves closer to the strange object in the crater, it seems to be a metal sphere)" +
+                        "\nBen: Is it some alien stuff? I'll better go get grandp-" +
+                        "\n(as he says that the sphere opens and a strange watch jumps on his wrist and holds tightly onto it)" +
                         "\nMaybe this summer won't be that boring after all...");
 
         Player p = new Player("Ben");
+        World world = new World(p);
+
 
         System.out.println(
-                        "\n*Ben tries to use the watch, a dozen mysterious figures appear on its screen*" +
+                        "\n(Ben tries to use the watch, a dozen mysterious figures appear on its screen)" +
                         "\nCool! Let's see what this thing can really do!" +
                         "\nIt seems I can pick only 1 alien for a start from those 10: \n" + Arrays.toString(starters) +
-                        ".\nEach one has a different type and propably stats too. Which one should I pick?");
+                        ".\nEach one has a different type and probably stats too. Which one should I pick?");
 
         String choice = in.nextLine();
         while (!contains(starters, choice)) {
-            System.out.println(choice + " is not availabe. The options are: " + Arrays.toString(starters) + ". Let's try again");
+            System.out.println(choice + " is not available. The options are: " + Arrays.toString(starters) + ". Let's try again");
             choice  = in.nextLine();
         }
 
@@ -91,9 +94,24 @@ public class Game {
                         region_choice = in.nextLine();
                     }
                     System.out.print("Ben: Let's move somewhere else from here. I'm thinking... " + region_choice.toUpperCase() + "!" +
-                            "\nYou arrive to " + region_choice.toUpperCase() + ".\n");
+                            "\n(You arrive to " + region_choice.toUpperCase() + ".)\n\n");
 
                     //explore function
+                    world.explore();
+                    break;
+                case "TUTORIAL":
+                    System.out.println("\nGame has simple mechanics. You choose a starter alien and as you progress through the game you" +
+                            "scan more of them, " +
+                            "\nenabling you to change into them and use them in a fight. Each alien has their own strengths and weaknesses, so choose them wisely." +
+                            "\nAttacks of aliens you use should be written in one word on input, for example: 'DIAMOND CAGE' attack should be written as 'DIAMONDCAGE'." +
+                            "\nThe states you wish to explore using EXPLORE option should be written with appropriate space, for example 'NEW YORK' should be written with the space." +
+                            "\nIn the main menu of the game there are several options available:" +
+                            "\nBATTLE   - finds you an enemy whom you might fight," +
+                            "\nOMNITRIX - displays your current Omnitrix data, in other words the aliens you're able to transform into," +
+                            "\nHEAL     - heals your whole party, although the alien you fought as the previous fight is automatically healed," +
+                            "\nEXPLORE  - makes you explore the nearby area in order to find items or NPCs to talk to," +
+                            "\nTUTORIAL - (you're here) short explanation of your options in the game," +
+                            "\nQUIT     - quits the game.");
                     break;
                 default:
                     throw new IllegalArgumentException(choice + " isn't a choice!");
@@ -195,7 +213,7 @@ public class Game {
                     currentAlien = newAlien; // Aktualizacja referencji w klasie Game
                 }
             } else {
-                System.out.println("Invalid alien choice. Staying as " + currentAlien.getName() + ".");
+                System.out.println("Invalid alien choice. Changing into starter alien: " + currentAlien.getName() + ".");
             }
         }
         return currentAlien; // Zwracanie obecnego kosmity po wykonaniu transformacji
