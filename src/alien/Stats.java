@@ -1,6 +1,6 @@
 package alien;
 
-public enum Stats //Statystyki Pokemonów
+public enum Stats //Statystyki kosmitów
 {
     HP, ATTACK,  DEFENSE, SP_ATTACK, SP_DEFENSE, SPEED;
 

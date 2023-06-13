@@ -105,7 +105,7 @@ public enum Move
         TYPE = type;
         POWER = power;
         MOVE_TYPE = m;
-        this.PP = PP;
+        this.PP = PP; //PP - power points
         battlePP = PP;
         ACCURACY = accuracy;
         SIDE_EFFECT = status;

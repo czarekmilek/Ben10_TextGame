@@ -52,8 +52,8 @@ public class Game {
 
         System.out.println("Let's go with " + choice.toUpperCase() + "!");
         Alien chosenAlien = new Alien(Species.valueOf(choice.toUpperCase().replace(" ", "_")));
-        p.addToParty(chosenAlien);
         p.scanAlien(chosenAlien); // Dodajemy pierwszego wybranego kosmitę do scannedAliens
+        p.addToParty(chosenAlien);
         System.out.println("\nIt seems this watch detects other alien forms nearby... I could find them one by one using BATTLE option.");
         boolean quit = false;
 
@@ -100,15 +100,17 @@ public class Game {
                     world.explore();
                     break;
                 case "TUTORIAL":
-                    System.out.println("\nGame has simple mechanics. You choose a starter alien and as you progress through the game you" +
+                    System.out.println("\nGame has simple mechanics. You choose a starter alien and as you progress through the game you " +
                             "scan more of them, " +
                             "\nenabling you to change into them and use them in a fight. Each alien has their own strengths and weaknesses, so choose them wisely." +
-                            "\nAttacks of aliens you use should be written in one word on input, for example: 'DIAMOND CAGE' attack should be written as 'DIAMONDCAGE'." +
+                            "\nDuring your travel you're constantly transformed into your starter alien. So, whenever you start a BATTLE, if you wish to fight as any other" +
+                            "\nalien you scanned before (different from your starter) you should input YES when prompted about transforming." +
+                            "\n\nAttacks of aliens you use should be written in one word on input, for example: 'DIAMOND CAGE' attack should be written as 'DIAMONDCAGE'." +
                             "\nThe states you wish to explore using EXPLORE option should be written with appropriate space, for example 'NEW YORK' should be written with the space." +
-                            "\nIn the main menu of the game there are several options available:" +
+                            "\n\nIn the main menu of the game there are several options available:" +
                             "\nBATTLE   - finds you an enemy whom you might fight," +
                             "\nOMNITRIX - displays your current Omnitrix data, in other words the aliens you're able to transform into," +
-                            "\nHEAL     - heals your whole party, although the alien you fought as the previous fight is automatically healed," +
+                            "\nHEAL     - heals your whole party, although the alien you fought as in the previous fight is automatically healed," +
                             "\nEXPLORE  - makes you explore the nearby area in order to find items or NPCs to talk to," +
                             "\nTUTORIAL - (you're here) short explanation of your options in the game," +
                             "\nQUIT     - quits the game.");
@@ -183,7 +185,7 @@ public class Game {
     private static Alien transformAlien(Player player, Alien currentAlien) {
         Scanner in = new Scanner(System.in);
 
-        System.out.println("Do you want to transform into a different alien? (yes/no)");
+        System.out.println("Do you want to transform into an alien different than your starter? (yes/no)");
         String choice = in.nextLine();
 
         if (choice.equalsIgnoreCase("yes")) {

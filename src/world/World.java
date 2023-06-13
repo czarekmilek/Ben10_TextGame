@@ -3,7 +3,6 @@ package world;
 import java.util.Random;
 
 import player.Player;
-import world.Event;
 
 public class World {
     private Player player;
@@ -14,12 +13,16 @@ public class World {
         this.random = new Random();
     }
 
+    /**
+     * Exploruje świat, wywołuje eventy
+     */
     public void explore() {
         // Logika eksploracji świata
         System.out.println("Exploring the world...");
         Event event = getRandomEvent();
         handleEvent(event);
     }
+
 
     private Event getRandomEvent() {
         Event[] events = Event.values();

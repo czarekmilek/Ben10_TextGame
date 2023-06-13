@@ -1,7 +1,5 @@
 package player;
 
-import alien.Alien;
-
 import java.util.Map;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +15,10 @@ public class Backpack {
         return items;
     }
 
+    /**
+     * Dodaje item do plecaka
+     * @param item item
+     */
     public void addItem(Item item) {
         items.add(item);
     }

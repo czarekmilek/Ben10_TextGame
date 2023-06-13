@@ -19,6 +19,10 @@ public class Player {
         this.backpack = new Backpack();
     }
 
+    /**
+     * Dodaje kosmitę do party
+     * @param alien kosmita
+     */
     public void addToParty(Alien alien) {
         Alien existingAlien = getAlienByName(alien.getName());
         if (existingAlien != null) {
@@ -31,11 +35,19 @@ public class Player {
         }
     }
 
-
+    /**
+     * Zwraca party gracza
+     * @return party
+     */
     public Alien[] getParty() {
         return party.toArray(new Alien[0]);
     }
 
+    /**
+     * Zwraca kosmitę na podstawie jego imienia
+     * @param name imię
+     * @return Alien/null
+     */
     public Alien getAlienByName(String name) {
         for (Alien alien : party) {
             if (alien.getName().equalsIgnoreCase(name)) {
@@ -45,18 +57,35 @@ public class Player {
         return null;
     }
 
+    /**
+     * Zwraca kosmitę na podstawie slotu, w którym się znajduje
+     * @param slot slot kosmity
+     * @return Alien
+     */
     public Alien getAlienBySlot(int slot) {
         return party.get(slot);
     }
 
+    /**
+     * Zwraca obecnego kosmitę
+     * @return currentAlien
+     */
     public Alien getCurrentAlien() {
         return currentAlien;
     }
 
+    /**
+     * Ustawia obecnego kosmitę
+     * @param alien kosmita
+     */
     public void setCurrentAlien(Alien alien) {
         currentAlien = alien;
     }
 
+    /**
+     * Skanuje kosmitę do Omnitrixa
+     * @param alien kosmita
+     */
     public void scanAlien(Alien alien) {
         Alien existingAlien = getAlienByName(alien.getName());
         if (existingAlien != null) {
@@ -69,10 +98,18 @@ public class Player {
         }
     }
 
-
+    /**
+     * Dodaje item do plecaka
+     * @param item item
+     */
     public void addItemToBackpack(Item item) {
         backpack.addItem(item);
     }
+
+    /**
+     * Zwraca plecak gracza
+     * @return backpack
+     */
     public Backpack getBackpack() {
             return backpack;
     }

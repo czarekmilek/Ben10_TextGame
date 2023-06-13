@@ -37,15 +37,12 @@ public class Battle {
         return false;
     }
 
-    public byte getAlienSlot() {
-        return alienSlot;
-    }
-
-    public void setAlienSlot(byte alienSlot) {
-        this.alienSlot = alienSlot;
-        player = player1.getParty()[alienSlot];
-    }
-
+    /**
+     * Czy udało się zaaplikowanie statusu na kosmicie?
+     * @param m ruch
+     * @param p kosmita
+     * @return True/False
+     */
     public static boolean applyStatus(final Move m, final Alien p) {
         final Status s = m.getStatusEffect();
         for(int i = 0; i < p.getStatus().length; i++) {
@@ -149,10 +146,23 @@ public class Battle {
         return str + "\n";
     }
 
+    /**
+     * Przeliczenie doświadczenia po walce
+     * @param victor zwycięzca
+     * @param loser przegrany
+     * @return doświadczenie
+     */
     private int calcExp(Alien victor, Alien loser) {
         return (int)(((Math.pow(2 * loser.getLevel() + 10, 2.5) / Math.pow(loser.getLevel() + victor.getLevel() + 10, 2.5)) + 1));
     }
 
+    /**
+     * Przeliczenie obrażeń na podstawie ruchu
+     * @param attacking atakujący
+     * @param used użyty ruch
+     * @param defending broniący się
+     * @return
+     */
     private short calculateDamage(Alien attacking, Move used, Alien defending) {
         short attack, defense;
         switch(used.getMoveType()) {
@@ -176,6 +186,12 @@ public class Battle {
                 (attack / (double)defense) * used.getPower() + 2) * modifiers(attacking, used, defending));
     }
 
+    /**
+     * Efektywność typu
+     * @param defending broniący się
+     * @param used użyty ruch
+     * @return
+     */
     private float typeEffectiveness(Alien defending, Move used) {
         float typeEffectiveness = 1;
 
@@ -193,9 +209,9 @@ public class Battle {
 
     /**
      * Znajduje właściwy modyfikator obrażeń dla użytego ruchu bazując na <code>Alien</code>.
-     * @param attacking
-     * @param used
-     * @param defending
+     * @param attacking atakujący
+     * @param used użyty ruch
+     * @param defending broniący się
      * @return
      */
     private float modifiers(Alien attacking, Move used, Alien defending) {

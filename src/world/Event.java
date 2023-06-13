@@ -67,6 +67,9 @@ public enum Event {
         return interactions;
     }
 
+    /**
+     * Obsługuje rodzaje interakcji ze światem
+     */
     public void playInteraction() {
         if (interactions instanceof DialogueInteraction[]) {
             DialogueInteraction[] dialogueInteractions = (DialogueInteraction[]) interactions;

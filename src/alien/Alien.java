@@ -23,21 +23,22 @@ public class Alien
     {
         this(species, 5);
     }
+
     /**
      * Tworzy nowego kosmitę na podanym poziomie.
      * @param species Gatunek kosmity.
      */
     public Alien(Species species, int level)
     {
-        //Gatunek Pokemona
+        //Gatunek kosmity
         this.species = species;
 
         //Status - kosmici nie mają żadnych statusów na starcie
         status = new boolean[] {false, false, false, false, false, false};
 
-        //Statystyki Pokemona w walce
+        //Statystyki kosmity w walce
         inBattleStats = new short[6];
-        //Ruchy - zestaw ruchów dostępnych dla Pokemona
+        //Ruchy - zestaw ruchów dostępnych dla kosmity
         moveSet = new Move[4];
 
         //Poziom kosmity
@@ -71,10 +72,18 @@ public class Alien
         initializeMoves();
     }
 
+    /**
+     * Zwraca status, pod którego wpływem jest obecnie kosmita
+     * @return status
+     */
     public boolean[] getStatus() {
         return status;
     }
 
+    /**
+     * Zadaje obrażenia
+     * @param damage obrażenia
+     */
     public void takeDamage(int damage)
     {
         inBattleStats[(byte)Stats.HP.ordinal()] -= (short)damage;
@@ -92,15 +101,6 @@ public class Alien
     public boolean isFainted()
     {
         return inBattleStats[(byte)Stats.HP.ordinal()] <= 0;
-    }
-
-    /**
-     * Czy kosmita może nauczyć się nowego ruchu?
-     * @return True/False
-     */
-    public boolean canLearnNewMove()
-    {
-        return species.getLearnset().containsKey(level);
     }
 
     private void initializeMoves()
@@ -121,6 +121,10 @@ public class Alien
         }
     }
 
+    /**
+     * Zwraca zestaw ruchów kosmity
+     * @return moveSet
+     */
     public Move[] getMoveSet()
     {
         byte count = (byte)moveSet.length;

@@ -87,7 +87,13 @@ public enum Type {
         NO_EFFECT = noEffect;
     }
 
-    private boolean contains(String[] t, Type p) //Metoda sprawdzająca, czy dany Typ pojawia się w tablicy
+    /**
+     * Metoda sprawdzająca, czy dany Typ pojawia się w tablicy
+     * @param t tablica
+     * @param p typ
+     * @return True/False
+     */
+    private boolean contains(String[] t, Type p)
     {
         if(t.length == 0)
         {
