@@ -104,7 +104,7 @@ public enum Species
     }
 
     /**
-     * (TODO) Przeliczenie doświadczenia na podstawie doświadczenia
+     * Przelicza doświadczenie
      * @param level poziom
      * @return doświadczenie
      */

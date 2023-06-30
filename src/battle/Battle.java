@@ -165,6 +165,7 @@ public class Battle {
      */
     private short calculateDamage(Alien attacking, Move used, Alien defending) {
         short attack, defense;
+
         switch(used.getMoveType()) {
             case PHYSICAL:
                 attack = attacking.getInBattleStat(Stats.ATTACK);
@@ -175,9 +176,44 @@ public class Battle {
                 defense = defending.getInBattleStat(Stats.SP_DEFENSE);
                 break;
             case STATUS:
-                applyStatus(used, defending);
-                attack = attacking.getInBattleStat(Stats.SP_ATTACK);
-                defense = defending.getInBattleStat(Stats.SP_DEFENSE);
+                if(applyStatus(used, defending)) {
+                  if(used.getStatusEffect() == Status.BURN) {
+                      attack = (short) (attacking.getInBattleStat(Stats.SP_ATTACK) * 1.2);
+                      defense = (short) (defending.getInBattleStat(Stats.SP_DEFENSE) * 0.8);
+                  }
+                  else if(used.getStatusEffect() == Status.FREEZE) {
+                        attack = (short) (attacking.getInBattleStat(Stats.SP_ATTACK) * 1.2);
+                        defense = (short) (defending.getInBattleStat(Stats.SP_ATTACK) * 0.8);
+                    }
+                  else if(used.getStatusEffect() == Status.CONFUSION) {
+                      attack = (short) (attacking.getInBattleStat(Stats.DEFENSE) * 1.2);
+                      defense = (short) (defending.getInBattleStat(Stats.ATTACK) * 0.8);
+                  }
+                  else if(used.getStatusEffect() == Status.PARALYZE) {
+                      attack = (short) (attacking.getInBattleStat(Stats.SP_DEFENSE) * 1.2);
+                      defense = (short) (defending.getInBattleStat(Stats.SP_ATTACK) * 0.8);
+                  }
+                  else if(used.getStatusEffect() == Status.POISON) {
+                      attack = (short) (attacking.getInBattleStat(Stats.ATTACK) * 1.2);
+                      defense = (short) (defending.getInBattleStat(Stats.ATTACK) * 0.8);
+                  }
+                  else if(used.getStatusEffect() == Status.SEED) {
+                      attack = (short) (attacking.getInBattleStat(Stats.SP_DEFENSE) * 1.2);
+                      defense = (short) (defending.getInBattleStat(Stats.SP_DEFENSE) * 0.8);
+                  }
+                  else if(used.getStatusEffect() == Status.SLEEP) {
+                      attack = attacking.getInBattleStat(Stats.SP_ATTACK);
+                      defense = (short) (defending.getInBattleStat(Stats.SP_DEFENSE) * 0.5);
+                  }
+                  else {
+                      attack = attacking.getInBattleStat(Stats.SP_ATTACK);
+                      defense = defending.getInBattleStat(Stats.SP_DEFENSE);
+                  }
+            }
+                else {
+                    attack = attacking.getInBattleStat(Stats.SP_ATTACK);
+                    defense = defending.getInBattleStat(Stats.SP_DEFENSE);
+                }
                 break;
             default:
                 throw new IllegalStateException("The MoveType " + used.getMoveType() + " is illegal!");

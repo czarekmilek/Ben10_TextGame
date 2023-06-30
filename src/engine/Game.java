@@ -13,11 +13,11 @@ public class Game {
         Scanner in = new Scanner(System.in);
 
         final String[] starters = new String[]
-                {"Heatblast", "Fourarms", "Stinkfly", "Upchuck", "Grey Matter",
+                {"Heatblast", "Fourarms", "Stinkfly", "Upchuck", "Cannonbolt",
                 "Wildmutt", "Diamondhead", "XLR8", "Ghostfreak", "Ripjaws"};
 
         final String[] regions = new String[] {"New York", "Ohio", "Washington", "Texas", "Carolina", "Florida", "California"},
-                options = new String[] {"Battle", "Omnitrix", "Heal", "Explore", "Tutorial", "Quit"};
+                options = new String[] {"Battle", "Omnitrix", "Heal", "Explore", "Backpack", "Tutorial", "Quit"};
 
         System.out.println(
                         "\n(Summer holidays just started. Ben Tennyson just started a road trip with his grandpa and cousin)" +
@@ -42,7 +42,8 @@ public class Game {
                         "\n(Ben tries to use the watch, a dozen mysterious figures appear on its screen)" +
                         "\nCool! Let's see what this thing can really do!" +
                         "\nIt seems I can pick only 1 alien for a start from those 10: \n" + Arrays.toString(starters) +
-                        ".\nEach one has a different type and probably stats too. Which one should I pick?");
+                        ".\nEach one has a different type and probably stats too. Which one should I pick?" +
+                        "\n(enter the name of the alien you wish to start as):");
 
         String choice = in.nextLine();
         while (!contains(starters, choice)) {
@@ -99,21 +100,49 @@ public class Game {
                     //explore function
                     world.explore();
                     break;
+                case "BACKPACK":
+                    Backpack backpack = p.getBackpack();
+//                    System.out.println(backpack.getItems());
+                    System.out.println("\nItems stored currently in backpack:");
+                    for (Item item : backpack.getItems()) {
+                        System.out.println(String.format("%30s %121s",
+                                item.getName(),
+                                item.getDescription()));
+                    }
+                    break;
                 case "TUTORIAL":
-                    System.out.println("\nGame has simple mechanics. You choose a starter alien and as you progress through the game you " +
-                            "scan more of them, " +
+                    System.out.println("\nGame has simple mechanics. You choose a starter alien and as you progress through the game you to scan more of them, " +
                             "\nenabling you to change into them and use them in a fight. Each alien has their own strengths and weaknesses, so choose them wisely." +
+                            "\n\nBATTLE" +
                             "\nDuring your travel you're constantly transformed into your starter alien. So, whenever you start a BATTLE, if you wish to fight as any other" +
                             "\nalien you scanned before (different from your starter) you should input YES when prompted about transforming." +
                             "\n\nAttacks of aliens you use should be written in one word on input, for example: 'DIAMOND CAGE' attack should be written as 'DIAMONDCAGE'." +
-                            "\nThe states you wish to explore using EXPLORE option should be written with appropriate space, for example 'NEW YORK' should be written with the space." +
+                            "\nOn the other hand, the names of aliens you wish to BATTLE as and states you wish to EXPLORE should be written with appropriate space, " +
+                            "\nfor example 'GREY MATTER' or 'NEW YORK' should be written with the space." +
+                            "\n\nTYPES" +
+                            "\nEach alien has a type. Type defines the nature of an alien, some natures are stronger against other and vice versa." +
+                            "\nFor example: Heatblast is a FIRE type alien, so he is naturally stronger against WILDVINE, who is GRASS type and so on. " +
+                            "\nEvery alien should have a type countering him, but what are those counters you'll find out while playing." +
+                            "\n\nSTATUS" +
+                            "\nSome attacks may apply STATUSes on other aliens. Those STATUSes last only one attack (the one assigned to giving a status). " +
+                            "\nEach one has a following effect:" +
+                            "\nBURN         - target loses SPECIAL DEFENSE and user gains SPECIAL ATTACK" +
+                            "\nFREEZE       - target loses SPECIAL ATTACK and user gains SPECIAL ATTACK" +
+                            "\nCONFUSION    - target loses ATTACK and user gains DEFENSE" +
+                            "\nPARALYZE     - target loses SPECIAL ATTACK and user gains SPECIAL DEFENSE" +
+                            "\nPOISON       - target loses ATTACK and user gains ATTACK" +
+                            "\nSEED         - target loses SPECIAL DEFENSE and user gains SPECIAL DEFENSE" +
+                            "\nSLEEP        - target loses SPECIAL DEFENSE and user keeps his stats" +
                             "\n\nIn the main menu of the game there are several options available:" +
                             "\nBATTLE   - finds you an enemy whom you might fight," +
-                            "\nOMNITRIX - displays your current Omnitrix data, in other words the aliens you're able to transform into," +
-                            "\nHEAL     - heals your whole party, although the alien you fought as in the previous fight is automatically healed," +
+                            "\nOMNITRIX - displays your current Omnitrix data, in other words - the aliens you're able to transform into," +
+                            "\nHEAL     - heals your whole party, although your starter is automatically healed after each battle," +
                             "\nEXPLORE  - makes you explore the nearby area in order to find items or NPCs to talk to," +
+                            "\nBACKPACK - opens your backpack, collectibles are stored there (they're not unique - so you can have multiple of same items)," +
                             "\nTUTORIAL - (you're here) short explanation of your options in the game," +
-                            "\nQUIT     - quits the game.");
+                            "\nQUIT     - quits the game." +
+                            "\n\nThat's everything I could think of for this TUTORIAL. Now that you have some understanding on how everything works," +
+                            "\ngo on and have fun playing!");
                     break;
                 default:
                     throw new IllegalArgumentException(choice + " isn't a choice!");
@@ -134,12 +163,13 @@ public class Game {
 
     private static void battle(Player player, Alien chosenAlien) {
         Scanner in = new Scanner(System.in);
-        final Alien hostile = EnemyGenerator.generateAlien(chosenAlien.getLevel());
-
-        System.out.println("Encountered a hostile " + hostile.getName() + "!");
 
         chosenAlien = transformAlien(player, chosenAlien);
         byte alienslot = getAlienSlot(player, chosenAlien.getName());
+
+        final Alien hostile = EnemyGenerator.generateAlien(chosenAlien.getLevel());
+
+        System.out.println("Encountered a hostile " + hostile.getName() + " (LVL: " + hostile.getLevel() + ")!\n");
 
         final Battle battle = new Battle(player, hostile, alienslot);
 

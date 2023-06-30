@@ -1,8 +1,8 @@
 package world;
 
 import java.util.Random;
-
 import player.Player;
+
 
 public class World {
     private Player player;
@@ -31,7 +31,16 @@ public class World {
     }
 
     public void handleEvent(Event event) {
-        event.playInteraction();
+
+        if(event == Event.FOUND_ITEM) {
+            player.addItemToBackpack(event.playInteraction());
+        }
+        else if(event == Event.RIDDLE) {
+            player.addItemToBackpack(event.playInteraction());
+        }
+        else {
+            event.playInteraction();
+        }
     }
 
 }

@@ -18,6 +18,6 @@ public class EnemyGenerator {
     public static Alien generateAlien(int lvl)
     {
         return new Alien(Species.values()[(int) (Math.random() * Species.values().length)],
-                ThreadLocalRandom.current().nextInt(lvl - 3, lvl + 4));
+                ThreadLocalRandom.current().nextInt(lvl/2, lvl + 4));
     }
 }
