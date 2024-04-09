@@ -56,3 +56,5 @@ In the main menu of the game there are several options available:
 
 ## Technical Details
 Classes, functions, etc. are described in the `ben10_opis.pdf` (in polish), the class diagram can be seen in `ben10_diagram.png`. 
+
+![ben10_diagram](https://github.com/czarekmilek/Ben10_TextGame/blob/main/ben10_diagram.png)
